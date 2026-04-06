@@ -4,9 +4,9 @@ class task_initial:
 
         # Words to make prompts more fun: first, second, etc.
         self.numbersword = [
-            "first", "second", "third", "fourth", "fifth",
-            "sixth", "seventh", "eighth", "ninth", "tenth",
-            "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth"
+            "First", "Second", "Third", "Fourth", "Fifth",
+            "Sixth", "Seventh", "Eighth", "Ninth", "Tenth",
+            "Eleventh", "Twelfth", "Thirteenth", "Fourteenth", "Fifteenth"
         ]
 
     def task_inputed(self):
@@ -14,32 +14,46 @@ class task_initial:
         # Counter for numbering tasks
             n=0
 
-        # Temp variable to hold user input
-            temptasks=""
+            check=""
 
         # Keep asking tasks until user types "Exist"
-            while temptasks !="Exist":
+            while check !="Exit":
+                    temptasks={}
+                    
+                    temptasks["title"]= input(f"Enter your {self.numbersword[n].lower()} task = ").capitalize()
+                    temptasks["schedule date"] = input(f"Enter your {self.numbersword[n].lower()} task schedule date = ")
+                    temptasks["status"] = "Pending"
 
-            # Prompt with numbered task
-                temptasks=input(f"Enter your {self.numbersword[n]} task ('Exist' to end) = ").capitalize()
-            
-            # Add task to the list if not exiting
-                if temptasks!= "Exist":
-                    self.tasks.append(temptasks)
-                n=n+1  # Move to next number word
+                    print("")
+
+                    check=input("Enter 'Exit' to end = ").capitalize()
+
+                # Add task to the list if not exiting
+                    if check!= "Exit":
+                        print("")
+                        self.tasks.append(temptasks)
+                        n=n+1
 
             print(" ")  # Just some spacing
 
     def initial_tasks_file(self):         
         # Save tasks to a file
         with open("tasks.txt","a") as taskfile:
-            for i in range(len(self.tasks)):
-                taskfile.write(f"{i+1}. {self.tasks[i]}\n")  # Numbered in file
+            for i, task in enumerate(self.tasks):
+                taskfile.write(f"{self.numbersword[i]} task-->\n")
+                taskfile.write(f"Title : {task['title']}\n")
+                taskfile.write(f"Schedule date : {task['schedule date']}\n")
+                taskfile.write(f"Status : {task['status']}\n")
+                taskfile.write(f"\n")
 
     def initial_tasks_print(self):
         # Print all tasks nicely
-        for i in range(len(self.tasks)):
-            print(f"{i+1}. {self.tasks[i]}.")
+        for i, task in enumerate(self.tasks):
+                print(f"{self.numbersword[i]} task-->\n")
+                print(f"Title : {task['title']}\n")
+                print(f"Schedule date : {task['schedule date']}\n")
+                print(f"Status : {task['status']}\n")
+                print(f"\n")
 
 class tasks_manager(task_initial):
     # Delete tasks & update the file
