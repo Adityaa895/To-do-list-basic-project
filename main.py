@@ -58,83 +58,97 @@ class tasks_manager(task_initial):
     def menu_option(self):
          print("")
 
-         print("---- MENU OPTIONS ----\n\n1. Enter 'Delete' to delete the tasks\n" \
-         "2. Enter 'Add' to add more tasks")
+         print("<------ MENU OPTIONS ------>\n\n1. Enter 'Delete' to delete the tasks\n" \
+         "2. Enter 'Add' to add more tasks\n3. Enter 'Update status' to update task's status completed\n" \
+         "3. Enter 'Pending' to view pending tasks")
          print("")
-
-         self.option = input("Enter from the above menu = ").capitalize()
 
     # Delete tasks & update the file
     def delete_tasks(self):
         print("")  # spacing
-        
-        # Ask user if they want to delete
-        tempdelete =input("Write 'Delete' if you want to remove tasks.\n---> ").capitalize()
-        print("")  # spacing
+    
+        for i in range(len(self.tasks)):
+             # Ask which task to delete, 100 to quit
+             index_delete=int(input("Enter the number of task you want to delete ('100' to end) = "))
+             print("")
 
-        # If yes, start deletion loop
-        if tempdelete == "Delete":
-            for i in range(len(self.tasks)):
-                # Ask which task to delete, 100 to quit
-                index_delete=int(input("Enter the number of task you want to delete ('100' to end) = "))
-                print("")
+             if index_delete == 100:
+                 break
+             else:
+                 # Remove chosen task (adjusting for 0-index)
+                self.tasks.pop(index_delete-1)
 
-                if index_delete == 100:
-                    break
-                else:
-                    # Remove chosen task (adjusting for 0-index)
-                    self.tasks.pop(index_delete-1)
+                print(" ")  # spacing
 
-                    print(" ")  # spacing
-
-                    super().initial_tasks_file()
+                super().initial_tasks_file()
                     # Show current tasks after deletion
-                    print("Updated tasks list ---->")
-                    print("")
-                    super().initial_tasks_print()
+                print("Updated tasks list ---->")
+                print("")
+                super().initial_tasks_print()
                     
-                    print("")
+                print("")
 
     def add_more_tasks(self):
          temptasks=[]
          print("")
-
-         tempadd_more = input("Write 'Add' to add more tasks = ").capitalize()
          
+         super().task_inputed()
 
-         if tempadd_more=="Add":
+         with open("tasks.json","w") as taskfile:
+            json.dump(self.tasks,taskfile,indent=4)
 
-            super().task_inputed()
-
-            with open("tasks.json","w") as taskfile:
-                json.dump(self.tasks,taskfile,indent=4)
-
-            super().initial_tasks_print()
+         super().initial_tasks_print()
 
     def update_status(self):
          print("")
 
-         tempstatus=input("Enter 'Update status' to update task's status to 'Complete' = ").capitalize()
-         print("")
+         for i in range(len(self.tasks)):
 
-         if tempstatus=="Update status":
-            for i in range(len(self.tasks)):
+             number_status=int(input("Enter the task's number of which status you want to change('100' to end) = "))
+             print("")
 
-                number_status=int(input("Enter the task's number of which status you want to change('100' to end) = "))
-                print("")
+             if number_status!=100:
+              self.tasks[number_status-1]["status"]= "Completed"
+              super().initial_tasks_print()
+             else:
+              break
 
-                if number_status!=100:
-                 self.tasks[number_status-1]["status"]= "Completed"
-                else:
-                    break
+         super().initial_tasks_file()
+         super().initial_tasks_print()
 
-                super().initial_tasks_file()
-                super().initial_tasks_print()
+    def display_pending(self):
+        print("")
+        print("List of pending tasks ---->")
+
+        pending_count = 0
+
+        for task in self.tasks:
+            if task["status"] == "Pending":
+                print(f"{self.numbersword[pending_count]} task -->")
+                print(f"Title : {task['title']}")
+                print(f"Schedule date : {task['schedule date']}")
+                print(f"Status : {task['status']}\n")
+                pending_count += 1
                  
             
 # Create the manager instance and run the app
 manager=tasks_manager()
 manager.task_inputed()          # Input tasks
 manager.initial_tasks_file()    # Save tasks to file
-manager.initial_tasks_print()   # Print all tasks
-manager.update_status()
+manager.initial_tasks_print() 
+
+while True:
+    manager.menu_option()
+
+    option = input("Enter from the above menu = ").capitalize()
+
+    if option=="Delete":
+        manager.delete_tasks()
+    elif option =="Add":
+        manager.add_more_tasks()
+    elif option == "Update status":
+        manager.update_status()
+    elif option == "Pending":
+        manager.display_pending()
+    else:
+        print("Please enter from the menu options.")
