@@ -38,17 +38,12 @@ class task_initial:
 
     def initial_tasks_file(self):         
         # Save tasks to a file
-        with open("tasks.json","a") as taskfile:
-            for i, task in enumerate(self.tasks):
-                taskfile.write(f"{self.numbersword[i]} task -->\n")
-                taskfile.write(f"\n")
-                taskfile.write(f"Title : {task['title']}\n")
-                taskfile.write(f"Schedule date : {task['schedule date']}\n")
-                taskfile.write(f"Status : {task['status']}\n")
-                taskfile.write(f"\n"*2)
+        with open("tasks.json","w") as taskfile:
+            json.dump(self.tasks,taskfile,indent=4)
 
     def initial_tasks_print(self):
         print("Your tasks list ----->")
+        print("")
         # Print all tasks nicely
         for i, task in enumerate(self.tasks):
                 print(f"{self.numbersword[i]} task -->")
@@ -59,16 +54,26 @@ class task_initial:
                 print("\n"*2)
 
 class tasks_manager(task_initial):
+
+    def menu_option(self):
+         print("")
+
+         print("---- MENU OPTIONS ----\n\n1. Enter 'Delete' to delete the tasks\n" \
+         "2. Enter 'Add' to add more tasks")
+         print("")
+
+         self.option = input("Enter from the above menu = ").capitalize()
+
     # Delete tasks & update the file
     def delete_tasks(self):
         print("")  # spacing
         
         # Ask user if they want to delete
-        tempdelete =input("Write 'delete' if you want to remove tasks.\n---> ").lower()
+        tempdelete =input("Write 'Delete' if you want to remove tasks.\n---> ").capitalize()
         print("")  # spacing
 
         # If yes, start deletion loop
-        if tempdelete == "delete":
+        if tempdelete == "Delete":
             for i in range(len(self.tasks)):
                 # Ask which task to delete, 100 to quit
                 index_delete=int(input("Enter the number of task you want to delete ('100' to end) = "))
@@ -82,11 +87,7 @@ class tasks_manager(task_initial):
 
                     print(" ")  # spacing
 
-                    # Update file with remaining tasks
-                    with open("tasks.txt","w") as taskfile:
-                        for i in range(len(self.tasks)):
-                            taskfile.write(f"{i+1}. {self.tasks[i]}\n")  # save updated tasks
-                    
+                    super().initial_tasks_file()
                     # Show current tasks after deletion
                     print("Updated tasks list ---->")
                     print("")
@@ -94,9 +95,46 @@ class tasks_manager(task_initial):
                     
                     print("")
 
+    def add_more_tasks(self):
+         temptasks=[]
+         print("")
+
+         tempadd_more = input("Write 'Add' to add more tasks = ").capitalize()
+         
+
+         if tempadd_more=="Add":
+
+            super().task_inputed()
+
+            with open("tasks.json","w") as taskfile:
+                json.dump(self.tasks,taskfile,indent=4)
+
+            super().initial_tasks_print()
+
+    def update_status(self):
+         print("")
+
+         tempstatus=input("Enter 'Update status' to update task's status to 'Complete' = ").capitalize()
+         print("")
+
+         if tempstatus=="Update status":
+            for i in range(len(self.tasks)):
+
+                number_status=int(input("Enter the task's number of which status you want to change('100' to end) = "))
+                print("")
+
+                if number_status!=100:
+                 self.tasks[number_status-1]["status"]= "Completed"
+                else:
+                    break
+
+                super().initial_tasks_file()
+                super().initial_tasks_print()
+                 
+            
 # Create the manager instance and run the app
 manager=tasks_manager()
 manager.task_inputed()          # Input tasks
 manager.initial_tasks_file()    # Save tasks to file
 manager.initial_tasks_print()   # Print all tasks
-manager.delete_tasks()          # Delete if needed
+manager.update_status()
