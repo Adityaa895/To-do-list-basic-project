@@ -60,7 +60,7 @@ class tasks_manager(task_initial):
 
          print("<------ MENU OPTIONS ------>\n\n1. Enter 'Delete' to delete the tasks\n" \
          "2. Enter 'Add' to add more tasks\n3. Enter 'Update status' to update task's status completed\n" \
-         "3. Enter 'Pending' to view pending tasks")
+         "3. Enter 'Pending' to view pending tasks\n4. Enter 'Edit' to edit tasks")
          print("")
 
     # Delete tasks & update the file
@@ -102,16 +102,13 @@ class tasks_manager(task_initial):
     def update_status(self):
          print("")
 
-         for i in range(len(self.tasks)):
+         tempnumber=int(input("Enter the task's number of which status you want to change = "))-1
+         print("")
 
-             number_status=int(input("Enter the task's number of which status you want to change('100' to end) = "))
-             print("")
-
-             if number_status!=100:
-              self.tasks[number_status-1]["status"]= "Completed"
-              super().initial_tasks_print()
-             else:
-              break
+         if 0<=tempnumber<len(self.tasks):
+             self.tasks[tempnumber]["status"]= "Completed"
+         else:
+             print("Invalid task's number!!")
 
          super().initial_tasks_file()
          super().initial_tasks_print()
@@ -129,8 +126,64 @@ class tasks_manager(task_initial):
                 print(f"Schedule date : {task['schedule date']}")
                 print(f"Status : {task['status']}\n")
                 pending_count += 1
+
+    def update_title(self):
+        print("")
+
+        tempnumber=int(input("Enter the number of the task you want to edit = "))-1
+        print("")
+
+        if 0<=tempnumber<len(self.tasks):
+
+            new_title=input("Enter your new task's title = ").capitalize()
+            self.tasks[tempnumber]["title"]=new_title
+
+            super().initial_tasks_file()
+            super().initial_tasks_print()
+
+        else:
+            print("Invalid task's number")
+
+    def update_schedule(self):
+        print("")
+
+        tempnumber=int(input("Enter the number of the task you want to edit = "))-1
+        print("")
+
+        if 0<=tempnumber<len(self.tasks):
+
+            new_schedule=input("Enter your new task's schedule date = ")
+            self.tasks[tempnumber]["schedule date"] = new_schedule
+
+            super().initial_tasks_file()
+            super().initial_tasks_print()
+
+        else:
+            print("Invalid task's number")
                  
-            
+    def edit_task(self):
+        print("")
+        check=""
+
+        while check!="Exit":
+
+            print("<------ Task edit options ------>\n1. Enter 'Title' to edit title\n" \
+            "2. Enter 'Date' to edit schedule date\n3. Enter 'Status' to update status\n ")
+
+            tempoption=input("Enter from the above edit options = ").capitalize()
+
+            if tempoption=="Title":
+                self.update_title()
+            elif tempoption == "Date":
+                self.update_schedule()
+            elif tempoption =="Status":
+                self.update_status()
+            else:
+                print("Please enter from the given options!")
+
+            check=input("Enter 'Exit' to end tasks editing = ").capitalize()
+            print("")
+
 # Create the manager instance and run the app
 manager=tasks_manager()
 manager.task_inputed()          # Input tasks
@@ -146,9 +199,9 @@ while True:
         manager.delete_tasks()
     elif option =="Add":
         manager.add_more_tasks()
-    elif option == "Update status":
-        manager.update_status()
     elif option == "Pending":
         manager.display_pending()
+    elif option == "Edit":
+        manager.edit_task()
     else:
         print("Please enter from the menu options.")
