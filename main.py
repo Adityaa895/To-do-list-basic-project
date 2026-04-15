@@ -1,4 +1,11 @@
+import tkinter as tk
 import json
+
+root=tk.Tk()
+root.geometry("800x670")
+root.title("To-Do List")
+
+
 
 class task_initial:
     def __init__(self):
@@ -12,34 +19,31 @@ class task_initial:
         ]
 
     def task_inputed(self):
-            print(" ")
-        # Counter for numbering tasks
-            n=0
+            
+            self.title = title_entry.get().capitalize()
+            self.schedule = schedule_entry.get()
 
-            check=""
-
-        # Keep asking tasks until user types "Exist"
-            while check !="Exit":
-                    temptasks={}
+            temptasks={}
                     
-                    temptasks["title"]= input(f"Enter your {self.numbersword[n].lower()} task = ").capitalize()
-                    temptasks["schedule date"] = input(f"Enter your {self.numbersword[n].lower()} task schedule date = ")
-                    temptasks["status"] = "Pending"
-                    n=n+1
+            temptasks["title"]= self.title
+            temptasks["schedule date"] = self.schedule
+            temptasks["status"] = "Pending"
 
-                    print("")
-                    self.tasks.append(temptasks)
-
-
-                    check=input("Enter 'Exit' to end = ").capitalize()
-                    print("")
-                        
-            print(" ")  # Just some spacing
+            if any(task["title"] == self.title for task in self.tasks ):
+                return False
+            else:
+                self.tasks.append(temptasks)
+                return True
 
     def initial_tasks_file(self):         
-        # Save tasks to a file
-        with open("tasks.json","w") as taskfile:
-            json.dump(self.tasks,taskfile,indent=4)
+
+         with open("tasks.json","w") as taskfile:
+          json.dump(self.tasks,taskfile,indent=4)
+
+    def add_button(self):
+
+        if self.task_inputed():
+            self.initial_tasks_file()
 
     def initial_tasks_print(self):
         print("Your tasks list ----->")
@@ -185,23 +189,47 @@ class tasks_manager(task_initial):
             print("")
 
 # Create the manager instance and run the app
-manager=tasks_manager()
-manager.task_inputed()          # Input tasks
-manager.initial_tasks_file()    # Save tasks to file
-manager.initial_tasks_print() 
+# manager=tasks_manager()
+# manager.task_inputed()          # Input tasks
+# manager.initial_tasks_file()    # Save tasks to file
+# manager.initial_tasks_print() 
 
-while True:
-    manager.menu_option()
+# while True:
+#     manager.menu_option()
 
-    option = input("Enter from the above menu = ").capitalize()
+#     option = input("Enter from the above menu = ").capitalize()
 
-    if option=="Delete":
-        manager.delete_tasks()
-    elif option =="Add":
-        manager.add_more_tasks()
-    elif option == "Pending":
-        manager.display_pending()
-    elif option == "Edit":
-        manager.edit_task()
-    else:
-        print("Please enter from the menu options.")
+#     if option=="Delete":
+#         manager.delete_tasks()
+#     elif option =="Add":
+#         manager.add_more_tasks()
+#     elif option == "Pending":
+#         manager.display_pending()
+#     elif option == "Edit":
+#         manager.edit_task()
+#     else:
+#         print("Please enter from the menu options.")
+initial = task_initial()
+
+title_label = tk.Label(root, text="--- TO DO List ---", font=("gothic",34,"bold"))
+title_label.pack(pady=40)
+
+title_label=tk.Label(root, text="Enter your task's title",font=("Arial",15,"italic"))
+title_label.pack(pady=10)
+
+title_entry= tk.Entry(root,width=25)
+title_entry.pack(pady=5)
+
+schedule_label=tk.Label(root, text="Enter your task's schedule date",font=("Arial",14,"italic"))
+schedule_label.pack(pady=10)
+
+schedule_entry= tk.Entry(root,width=25)
+schedule_entry.pack(pady=5)
+
+add_bt = tk.Button(root,text=" Add task ",font=("gothic",9),bd=2, width=8, height=2, command = initial.add_button )
+add_bt.pack(pady=7)
+
+taskbox = tk.Listbox(root,width=70,height=80)
+taskbox.pack(pady=7)
+
+root.mainloop()
