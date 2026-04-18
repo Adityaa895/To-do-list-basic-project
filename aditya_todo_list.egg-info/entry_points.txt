@@ -1,0 +1,2 @@
+[console_scripts]
+todo-gui = todo_list.main:main

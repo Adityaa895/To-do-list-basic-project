@@ -1,0 +1,11 @@
+README.md
+setup.py
+aditya_todo_list.egg-info/PKG-INFO
+aditya_todo_list.egg-info/SOURCES.txt
+aditya_todo_list.egg-info/dependency_links.txt
+aditya_todo_list.egg-info/entry_points.txt
+aditya_todo_list.egg-info/top_level.txt
+todo_list/__init__.py
+todo_list/core.py
+todo_list/gui.py
+todo_list/main.py
