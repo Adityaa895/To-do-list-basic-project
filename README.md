@@ -1,113 +1,118 @@
-# 📝 To-Do List App (Python)
+# 📝 To-Do List (Tkinter GUI)
 
-A simple but evolving To-Do List project built as part of my journey from learning Python basics to building real-world applications.
+A simple To-Do List application built using Python and Tkinter — created as part of my journey from learning basic Python to building a structured, installable project.
 
 ---
 
-## 🚀 About This Project
+## 🚀 About the Project
 
-This isn’t just a basic to-do list.
-It’s a project where I’m actively learning how real software is built — step by step.
+This project started as a basic terminal-based task manager.
+At that stage, I was mainly experimenting with:
 
-Started from:
-
-* Basic Python concepts
 * Lists and dictionaries
-* File handling (JSON)
+* Functions and classes
+* Basic file handling using JSON
 
-And now moving towards:
+As I continued learning, I gradually improved the project:
 
-* Object-Oriented Programming
-* GUI development
-* Eventually → Web apps & real-world tools
+* Added a graphical interface using Tkinter
+* Separated logic and UI into different modules
+* Learned how to structure code like a real Python package
+* Made it installable and runnable as a command (`todo-gui`)
 
----
-
-## 💡 Why I Built This
-
-I believe learning coding isn’t about memorizing syntax — it’s about building things that actually work.
-
-This project helps me:
-
-* Understand how logic turns into usable software
-* Practice structuring code properly
-* Experiment and improve step by step
+This project reflects that transition — from writing simple scripts to building something more organized and usable.
 
 ---
 
-## 🛠️ Features (Current & Planned)
+## ✨ Features
 
-### ✅ Current Features:
-
-* Add tasks
-* View tasks
-* Store tasks using JSON
-* Basic task management system
-
-### 🔄 Upcoming Improvements:
-
-* GUI interface (moving beyond terminal)
-* Better task organization
-* Input validation using OOP concepts
-* Cleaner and more structured code
-
-### 🌐 Future Vision:
-
-* Convert into a website
-* Possibly expand into a mobile app
-* Make it more user-friendly and visually appealing
+* Add tasks with title and schedule date
+* Delete tasks
+* Store tasks persistently using a JSON file
+* Display tasks in a GUI list
+* Simple and clean Tkinter interface
+* Prevent duplicate task titles
+* Automatically refresh task list after updates
 
 ---
 
-## 🧠 What I’ve Learned So Far
+## 🧠 What I Learned
 
-* Python fundamentals
-* Working with files and data storage
-* Object-Oriented Programming (classes, methods, structure)
-* How small projects evolve into bigger ones
+While building this project, I learned:
 
----
-
-## ⚡ Philosophy Behind This Project
-
-This project is not about being perfect.
-
-It’s about:
-
-* Building consistently
-* Improving gradually
-* Turning ideas into something real
-
-Every version of this project is better than the last.
+* How to use **classes and inheritance** properly
+* Managing data using **lists of dictionaries**
+* File handling with **JSON (load & dump)**
+* Basics of **Tkinter GUI development**
+* Difference between **project structure vs package structure**
+* How Python imports work (`absolute vs relative imports`)
+* Creating a **setup file and packaging a project**
+* Publishing a package on PyPI
 
 ---
 
-## 🎯 Goals
+## 📦 Installation
 
-* Strengthen my programming fundamentals
-* Move towards advanced development (AI / ML in future)
-* Build projects that actually matter
+Once published, install using:
 
----
-
-## 🧑‍💻 About Me
-
-High school student exploring tech, curious about how things work, and constantly trying to improve — one project at a time.
-
-Interested in:
-
-* Programming
-* AI & Machine Learning
-* Building useful tools
-* Fitness & self-improvement
+```bash
+pip install aditya-todo-list
+```
 
 ---
 
-## 📌 Note
+## ▶️ Usage
 
-This is a growing project.
-It will keep improving as my skills improve.
+Run the application:
+
+```bash
+todo-gui
+```
 
 ---
 
-⭐ If you’re also learning — build something, break it, improve it. That’s the real way.
+## 📁 Project Structure
+
+```
+todo_list/
+│
+├── setup.py
+├── README.md
+│
+└── todo_list/
+    ├── __init__.py
+    ├── main.py
+    ├── gui.py
+    ├── core.py
+```
+
+---
+
+## ⚠️ Notes
+
+* This is a beginner project focused on learning and improvement
+* The UI is simple and can be improved further
+* Future improvements may include better design and additional features
+
+---
+
+## 📌 Future Improvements
+
+* Add task editing directly from GUI
+* Improve UI/UX (better layout, styling)
+* Add task completion toggle button
+* Add sorting/filtering options
+
+---
+
+## 👨‍💻 Author
+
+Aditya Singh
+
+---
+
+## 💭 Final Note
+
+This project is less about building a perfect to-do app and more about learning how real Python projects are structured, improved, and shared.
+
+---
